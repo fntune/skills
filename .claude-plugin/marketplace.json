@@ -52,6 +52,15 @@
       "license": "MIT",
       "keywords": ["dependencies", "codebase-map", "trace"],
       "category": "productivity"
+    },
+    {
+      "name": "utils",
+      "source": "./utils",
+      "description": "Utility slash commands (/ask, /commit-push, /debloat, /dry, /lint, /triage, /update-claude, /worktree-diff, /web-interface-guidelines) and subagents (code-audit-reviewer, quick-refactor, task-executor).",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["commands", "agents", "git", "code-quality", "refactoring"],
+      "category": "productivity"
     }
   ]
 }

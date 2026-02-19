@@ -1,0 +1,5 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "description": "Utility slash commands and subagents for code quality, git workflow, and codebase analysis."
+}

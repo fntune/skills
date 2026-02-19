@@ -42,6 +42,32 @@ Map codebase dependencies from entry points to leaves. Outputs a dependency tree
 
 **Use when:** "trace dependencies", "map codebase", "reading order", "dependency tree"
 
+### utils
+
+Slash commands and subagents for everyday workflows.
+
+**Commands:**
+
+| Command | Description |
+|---|---|
+| `/ask` | Gather decisions via structured questions with tradeoff analysis |
+| `/commit-push` | Commit and push changes to current branch |
+| `/debloat` | Remove AI slop and unnecessary code |
+| `/dry` | Find DRY violations — duplicated logic, repeated patterns |
+| `/lint` | Run and report lint results |
+| `/triage` | Review issues against code, identify patterns, plan fixes |
+| `/update-claude` | Update CLAUDE.md based on conversation discoveries |
+| `/web-interface-guidelines` | Review UI code for Vercel Web Interface Guidelines compliance |
+| `/worktree-diff` | Compare a file across all worktrees and consolidate changes |
+
+**Agents:**
+
+| Agent | Description |
+|---|---|
+| `code-audit-reviewer` | Systematic code review against specs, catches AI-introduced issues |
+| `quick-refactor` | Fast mechanical refactoring — renames, moves, reformats |
+| `task-executor` | Precise execution of well-defined tasks without deviation |
+
 ## Installation
 
 ### Claude Code (native plugin)
@@ -52,7 +78,7 @@ claude plugin marketplace add fntune/skills
 
 # Install a skill
 claude plugin install ts-strict@fntune-skills
-claude plugin install swarm-audit@fntune-skills
+claude plugin install utils@fntune-skills
 ```
 
 ### Cross-agent (skills.sh)
@@ -65,13 +91,15 @@ npx skills add fntune/skills@ts-strict
 
 ## Structure
 
-Each skill is a plugin containing:
+Each plugin can contain:
 
 ```
-<skill>/
-  skills/<skill>/
-    SKILL.md        # Agent instructions (YAML frontmatter + markdown)
-    references/     # Supporting docs loaded on demand (optional)
+<plugin>/
+  .claude-plugin/plugin.json   # Plugin manifest
+  skills/<name>/SKILL.md       # Skills (contextual helpers)
+  commands/<name>.md            # Slash commands
+  agents/<name>.md              # Subagent definitions
+  references/                   # Supporting docs (optional)
 ```
 
 ## License
