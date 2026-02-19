@@ -1,0 +1,5 @@
+{
+  "name": "orchestrate",
+  "version": "1.0.0",
+  "description": "Orchestrate multi-stage refactors from an RCA or plan document with dependency tracking."
+}

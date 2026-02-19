@@ -1,0 +1,5 @@
+{
+  "name": "ts-strict",
+  "version": "1.0.0",
+  "description": "Migrate a codebase to strict TypeScript and Biome lint rules using an infrastructure-first strategy."
+}

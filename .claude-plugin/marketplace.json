@@ -5,8 +5,7 @@
   },
   "metadata": {
     "description": "Claude Code skills for TypeScript tooling, codebase auditing, design exploration, and refactoring orchestration.",
-    "version": "1.0.0",
-    "pluginRoot": "./"
+    "version": "1.0.0"
   },
   "plugins": [
     {

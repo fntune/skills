@@ -1,0 +1,5 @@
+{
+  "name": "design-exploration",
+  "version": "1.0.0",
+  "description": "Generate N distinct visual design variants of a page by spawning parallel agents."
+}
