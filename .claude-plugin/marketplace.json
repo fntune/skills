@@ -4,7 +4,7 @@
     "name": "fntune"
   },
   "metadata": {
-    "description": "Claude Code skills for TypeScript tooling, codebase auditing, design exploration, and refactoring orchestration.",
+    "description": "Skills, slash commands, and subagents for TypeScript tooling, codebase auditing, design exploration, and developer workflows.",
     "version": "1.0.0"
   },
   "plugins": [

@@ -1,38 +1,38 @@
-# Skills
+# fntune/skills
 
-Claude Code skills for TypeScript tooling, codebase auditing, design exploration, and refactoring orchestration.
+Claude Code plugin marketplace — skills, slash commands, and subagents for TypeScript tooling, codebase auditing, design exploration, and developer workflows.
 
-Follows the [Agent Skills](https://agentskills.io/) format.
+Installable via [Claude Code plugins](https://docs.anthropic.com/en/docs/claude-code/plugins) or [skills.sh](https://skills.sh/) (cross-agent).
 
-## Available Skills
+## Plugins
 
 ### ts-strict
 
-Migrate a codebase to strict TypeScript and Biome lint rules using an infrastructure-first approach. Treats type errors as symptoms of missing type architecture, not individual problems.
+Migrate a codebase to strict TypeScript and Biome lint rules using an infrastructure-first strategy. Treats type errors as symptoms of missing type architecture, not individual problems.
 
-**Use when:** "enable strict", "strict mode", "fix type safety", "tighten types", "noExplicitAny", "strict biome"
+**Triggers:** "enable strict", "strict mode", "fix type safety", "tighten types", "noExplicitAny", "strict biome"
 
 **Phases:** Baseline (per-flag error counts) → Audit (root cause categories) → Fix (type infrastructure) → Enable (flags + Biome rules) → Clean
 
-**Includes:** Drizzle + Zod v4 full-stack type propagation, monorepo considerations, 11 audit categories, fix patterns for every category.
+**Includes:** Drizzle + Zod v4 full-stack type propagation, monorepo considerations, 11 audit categories with fix patterns.
 
 ### design-exploration
 
 Generate N distinct visual design variants of a page by spawning parallel agents. Each variant is a self-contained page file with a unique aesthetic direction.
 
-**Use when:** "design exploration", "design variants", "parallel designs", "generate N designs"
+**Triggers:** "design exploration", "design variants", "parallel designs", "generate N designs"
 
 ### orchestrate
 
 Execute multi-stage refactoring plans with dependency tracking between stages. Takes an RCA or plan document as input and runs stages in topological order.
 
-**Use when:** implementing a phased refactoring plan with dependencies between stages
+**Triggers:** implementing a phased refactoring plan with dependencies between stages
 
 ### swarm-audit
 
 Multi-agent codebase review and fix pipeline. Discovers issues from the codebase itself, triages them, then fixes — all with parallel agents.
 
-**Use when:** "audit the codebase", "swarm audit", "security sweep", "type safety sweep", "codebase-wide review"
+**Triggers:** "audit the codebase", "swarm audit", "security sweep", "type safety sweep", "codebase-wide review"
 
 **Pipeline:** Review → Triage → Test → Fix → Verify
 
@@ -40,11 +40,11 @@ Multi-agent codebase review and fix pipeline. Discovers issues from the codebase
 
 Map codebase dependencies from entry points to leaves. Outputs a dependency tree and numbered reading order.
 
-**Use when:** "trace dependencies", "map codebase", "reading order", "dependency tree"
+**Triggers:** "trace dependencies", "map codebase", "reading order", "dependency tree"
 
 ### utils
 
-Slash commands and subagents for everyday workflows.
+Slash commands and subagents for everyday developer workflows.
 
 **Commands:**
 
@@ -73,33 +73,38 @@ Slash commands and subagents for everyday workflows.
 ### Claude Code (native plugin)
 
 ```bash
-# Add marketplace
+# Add marketplace (one time)
 claude plugin marketplace add fntune/skills
 
-# Install a skill
+# Install individual plugins
 claude plugin install ts-strict@fntune-skills
 claude plugin install utils@fntune-skills
+claude plugin install swarm-audit@fntune-skills
+claude plugin install design-exploration@fntune-skills
+claude plugin install orchestrate@fntune-skills
+claude plugin install trace@fntune-skills
 ```
 
 ### Cross-agent (skills.sh)
 
-Works with Claude Code, Codex CLI, Gemini CLI, and others:
+Works with Claude Code, Codex CLI, Gemini CLI, and [30+ other agents](https://skills.sh/):
 
 ```bash
+# Install all skills
+npx skills add fntune/skills
+
+# Install a single skill
 npx skills add fntune/skills@ts-strict
 ```
 
 ## Structure
 
-Each plugin can contain:
-
 ```
 <plugin>/
-  .claude-plugin/plugin.json   # Plugin manifest
-  skills/<name>/SKILL.md       # Skills (contextual helpers)
-  commands/<name>.md            # Slash commands
-  agents/<name>.md              # Subagent definitions
-  references/                   # Supporting docs (optional)
+  .claude-plugin/plugin.json   # Plugin manifest (name, version, description)
+  skills/<name>/SKILL.md       # Skills — contextual helpers with references/
+  commands/<name>.md            # Slash commands — user-invokable actions
+  agents/<name>.md              # Subagents — delegated task specialists
 ```
 
 ## License
