@@ -44,24 +44,35 @@ Map codebase dependencies from entry points to leaves. Outputs a dependency tree
 
 ## Installation
 
-Install all skills:
+### Claude Code (native plugin)
 
 ```bash
-npx skills add fntune/skills
+# Add marketplace
+claude plugin marketplace add fntune/skills
+
+# Install a skill
+claude plugin install ts-strict@fntune-skills
+claude plugin install swarm-audit@fntune-skills
 ```
 
-Install a single skill:
+### Cross-agent (skills.sh)
+
+Works with Claude Code, Codex CLI, Gemini CLI, and others:
 
 ```bash
 npx skills add fntune/skills@ts-strict
 ```
 
-## Skill Structure
+## Structure
 
-Each skill directory contains:
+Each skill is a plugin containing:
 
-- `SKILL.md` — Agent instructions with YAML frontmatter (name, description, triggers)
-- `references/` — Supporting documentation loaded on demand (optional)
+```
+<skill>/
+  skills/<skill>/
+    SKILL.md        # Agent instructions (YAML frontmatter + markdown)
+    references/     # Supporting docs loaded on demand (optional)
+```
 
 ## License
 

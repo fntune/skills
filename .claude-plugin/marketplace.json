@@ -1,0 +1,58 @@
+{
+  "name": "fntune-skills",
+  "owner": {
+    "name": "fntune"
+  },
+  "metadata": {
+    "description": "Claude Code skills for TypeScript tooling, codebase auditing, design exploration, and refactoring orchestration.",
+    "version": "1.0.0",
+    "pluginRoot": "./"
+  },
+  "plugins": [
+    {
+      "name": "ts-strict",
+      "source": "./ts-strict",
+      "description": "Migrate a codebase to strict TypeScript and Biome lint rules using an infrastructure-first strategy. Treats type errors as symptoms of missing type architecture, not individual problems.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["typescript", "strict", "biome", "type-safety", "migration"],
+      "category": "code-quality"
+    },
+    {
+      "name": "design-exploration",
+      "source": "./design-exploration",
+      "description": "Generate N distinct visual design variants of a page by spawning parallel agents. Each variant is a self-contained page file with a unique aesthetic direction.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["design", "ui", "variants", "parallel"],
+      "category": "design"
+    },
+    {
+      "name": "orchestrate",
+      "source": "./orchestrate",
+      "description": "Orchestrate multi-stage refactors from an RCA or plan document with dependency tracking between stages.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["refactoring", "orchestration", "planning"],
+      "category": "productivity"
+    },
+    {
+      "name": "swarm-audit",
+      "source": "./swarm-audit",
+      "description": "Multi-agent codebase review and fix pipeline. Discovers issues, triages, tests, and fixes with parallel agents.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["audit", "review", "security", "multi-agent"],
+      "category": "code-quality"
+    },
+    {
+      "name": "trace",
+      "source": "./trace",
+      "description": "Map codebase dependencies from entry points to leaves. Outputs dependency tree and numbered reading order.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["dependencies", "codebase-map", "trace"],
+      "category": "productivity"
+    }
+  ]
+}
