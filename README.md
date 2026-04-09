@@ -1,79 +1,130 @@
 # fntune/skills
 
-Claude Code plugin marketplace — skills, slash commands, and subagents for TypeScript tooling, codebase auditing, design exploration, and developer workflows.
+> Claude Code plugin marketplace — specialized agents, slash commands, and workflow automation for developers.
 
-Installable via [Claude Code plugins](https://docs.anthropic.com/en/docs/claude-code/plugins) or [skills.sh](https://skills.sh/) (cross-agent).
+```bash
+# Claude Code
+claude plugin marketplace add fntune/skills
+claude plugin install ts-strict@fntune-skills
+
+# Any agent (Claude Code, Codex CLI, Gemini CLI, ...)
+npx skills add fntune/skills
+```
+
+Six focused plugins. Install only what you need.
+
+---
 
 ## Plugins
 
-### ts-strict
+### ts-strict — TypeScript strict mode migration
 
-Migrate a codebase to strict TypeScript and Biome lint rules using an infrastructure-first strategy. Treats type errors as symptoms of missing type architecture, not individual problems.
+Migrates a codebase to `strict: true` and Biome lint rules using an infrastructure-first strategy: fix the type architecture first, then enable the flags — instead of whack-a-mole on 10,000 individual errors.
 
-**Triggers:** "enable strict", "strict mode", "fix type safety", "tighten types", "noExplicitAny", "strict biome"
+**Phases:** Baseline → Audit (11 error categories) → Fix type infrastructure → Enable strict flags + Biome → Clean
 
-**Phases:** Baseline (per-flag error counts) → Audit (root cause categories) → Fix (type infrastructure) → Enable (flags + Biome rules) → Clean
+**What it handles:**
+- Categorizes type errors by root cause (missing generics, implicit `any`, unsafe assertions, missing return types, etc.)
+- Full-stack type propagation with Drizzle ORM + Zod v4 patterns
+- Monorepo-aware (Turborepo, pnpm workspaces)
 
-**Includes:** Drizzle + Zod v4 full-stack type propagation, monorepo considerations, 11 audit categories with fix patterns.
+**Triggers:** "enable strict", "strict mode", "fix type safety", "tighten types", "noExplicitAny"
 
-### design-exploration
+---
 
-Generate N distinct visual design variants of a page by spawning parallel agents. Each variant is a self-contained page file with a unique aesthetic direction.
+### swarm-audit — Multi-agent codebase review and fix
+
+Discovers issues from the codebase itself, triages them, then fixes — all with parallel agents. You don't define the rules; the agents find the problems.
+
+**Pipeline:**
+1. **Review** — partitions codebase into domains, spawns parallel reviewer agents per domain
+2. **Triage** — team lead deduplicates and prioritizes findings
+3. **Test** — optionally checks UI pages after changes (browser-tester agent)
+4. **Fix** — parallel task-executor agents fix issues, domain-assigned
+5. **Verify** — type-check, lint, tests
+
+**Use for:** security sweeps, type safety audits, code quality passes, pre-release reviews
+
+**Triggers:** "audit the codebase", "swarm audit", "security sweep", "codebase-wide review"
+
+---
+
+### orchestrate — Multi-stage refactoring executor
+
+Takes an RCA or plan document as input, resolves stage dependencies, and executes the plan with parallel agents and task tracking.
+
+**What it does:**
+- Reads stage definitions and `depends_on` edges from a plan doc
+- Spawns parallel Explore agents to assess current state per stage
+- Creates a `TaskCreate` tree with dependency tracking (`addBlockedBy`)
+- Launches task-executor agents for incomplete stages
+- Verifies with type-check, lint, tests on completion
+- Updates the plan doc with status
+
+**Use for:** large refactors with an existing plan document, phased migrations, multi-PR work
+
+**Triggers:** implementing a phased plan with stage dependencies
+
+---
+
+### design-exploration — Parallel design variants
+
+Spawns N agents in parallel, each producing one self-contained page variant with a distinct aesthetic direction. All run simultaneously — you get N variants in the time it takes to generate one.
+
+**Output:** each variant is a standalone page file with its own styles and layout, ready to compare side by side.
 
 **Triggers:** "design exploration", "design variants", "parallel designs", "generate N designs"
 
-### orchestrate
+---
 
-Execute multi-stage refactoring plans with dependency tracking between stages. Takes an RCA or plan document as input and runs stages in topological order.
+### trace — Dependency tree mapper
 
-**Triggers:** implementing a phased refactoring plan with dependencies between stages
+Maps codebase dependencies from entry points to leaves. Outputs a dependency tree and a numbered reading order (leaves first, entry last). Uses only Grep, Glob, and Read — no model calls, instant results.
 
-### swarm-audit
+**Output:**
+- Nested dependency tree from entry point to all leaves
+- Numbered reading order for onboarding or refactoring planning
 
-Multi-agent codebase review and fix pipeline. Discovers issues from the codebase itself, triages them, then fixes — all with parallel agents.
-
-**Triggers:** "audit the codebase", "swarm audit", "security sweep", "type safety sweep", "codebase-wide review"
-
-**Pipeline:** Review → Triage → Test → Fix → Verify
-
-### trace
-
-Map codebase dependencies from entry points to leaves. Outputs a dependency tree and numbered reading order.
+**Use for:** onboarding to a new codebase, understanding what to read before moving files
 
 **Triggers:** "trace dependencies", "map codebase", "reading order", "dependency tree"
 
-### utils
+---
 
-Slash commands and subagents for everyday developer workflows.
+### utils — Slash commands and subagents for everyday workflows
 
-**Commands:**
+Nine slash commands and three subagents for common developer tasks.
 
-| Command | Description |
-|---|---|
-| `/ask` | Gather decisions via structured questions with tradeoff analysis |
-| `/commit-push` | Commit and push changes to current branch |
+**Slash commands:**
+
+| Command | What it does |
+|---------|-------------|
+| `/ask` | Structured decision gathering with tradeoff analysis |
+| `/commit-push` | Commit and push the current branch |
 | `/debloat` | Remove AI slop and unnecessary code |
 | `/dry` | Find DRY violations — duplicated logic, repeated patterns |
-| `/lint` | Run and report lint results |
+| `/lint` | Run linter and report results |
 | `/triage` | Review issues against code, identify patterns, plan fixes |
-| `/update-claude` | Update CLAUDE.md based on conversation discoveries |
-| `/web-interface-guidelines` | Review UI code for Vercel Web Interface Guidelines compliance |
+| `/update-claude` | Update CLAUDE.md from conversation discoveries |
+| `/web-interface-guidelines` | Check UI code against Vercel Web Interface Guidelines |
 | `/worktree-diff` | Compare a file across all worktrees and consolidate changes |
 
-**Agents:**
+**Subagents:**
 
-| Agent | Description |
-|---|---|
-| `code-audit-reviewer` | Systematic code review against specs, catches AI-introduced issues |
-| `quick-refactor` | Fast mechanical refactoring — renames, moves, reformats |
-| `task-executor` | Precise execution of well-defined tasks without deviation |
+| Agent | What it does |
+|-------|-------------|
+| `code-audit-reviewer` | Systematic code review against specs; catches AI-introduced issues, missing error handling, and inconsistencies |
+| `quick-refactor` | Fast mechanical refactoring — renames, moves, reformats, import updates |
+| `task-executor` | Precise execution of well-defined tasks without deviation or interpretation |
+
+---
 
 ## Installation
 
 ### Claude Code (native plugin)
 
 ```bash
-# Add marketplace (one time)
+# Add the marketplace once
 claude plugin marketplace add fntune/skills
 
 # Install individual plugins
@@ -90,22 +141,27 @@ claude plugin install trace@fntune-skills
 Works with Claude Code, Codex CLI, Gemini CLI, and [30+ other agents](https://skills.sh/):
 
 ```bash
-# Install all skills
+# All skills
 npx skills add fntune/skills
 
-# Install a single skill
+# Single skill
 npx skills add fntune/skills@ts-strict
+npx skills add fntune/skills@swarm-audit
 ```
 
-## Structure
+---
+
+## Plugin structure
 
 ```
 <plugin>/
-  .claude-plugin/plugin.json   # Plugin manifest (name, version, description)
-  skills/<name>/SKILL.md       # Skills — contextual helpers with references/
-  commands/<name>.md            # Slash commands — user-invokable actions
-  agents/<name>.md              # Subagents — delegated task specialists
+  .claude-plugin/plugin.json    manifest (name, version, description, triggers)
+  skills/<name>/SKILL.md        contextual knowledge — loaded when relevant
+  commands/<name>.md            slash commands — user-invokable actions
+  agents/<name>.md              subagents — delegated task specialists
 ```
+
+---
 
 ## License
 
