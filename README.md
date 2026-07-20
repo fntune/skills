@@ -11,7 +11,7 @@ claude plugin install ts-strict@fntune-skills
 npx skills add fntune/skills
 ```
 
-Six focused plugins. Install only what you need.
+Seven focused plugins. Install only what you need.
 
 ---
 
@@ -119,6 +119,18 @@ Nine slash commands and three subagents for common developer tasks.
 
 ---
 
+### xquik-x-data — Public X data workflow planning
+
+Plans source-verified Xquik REST API, webhook, monitor, search, and remote MCP
+workflows while keeping credentials and private implementation details out of
+generated artifacts.
+
+The plugin files are MIT licensed. The hosted Xquik platform is closed source.
+
+**Triggers:** "Xquik API", "X data search", "X account monitoring", "Xquik MCP"
+
+---
+
 ## Installation
 
 ### Claude Code (native plugin)
@@ -134,6 +146,7 @@ claude plugin install swarm-audit@fntune-skills
 claude plugin install design-exploration@fntune-skills
 claude plugin install orchestrate@fntune-skills
 claude plugin install trace@fntune-skills
+claude plugin install xquik-x-data@fntune-skills
 ```
 
 ### Cross-agent (skills.sh)
@@ -147,6 +160,7 @@ npx skills add fntune/skills
 # Single skill
 npx skills add fntune/skills@ts-strict
 npx skills add fntune/skills@swarm-audit
+npx skills add fntune/skills@xquik-x-data
 ```
 
 ---

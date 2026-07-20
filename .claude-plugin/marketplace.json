@@ -61,6 +61,15 @@
       "license": "MIT",
       "keywords": ["commands", "agents", "git", "code-quality", "refactoring"],
       "category": "productivity"
+    },
+    {
+      "name": "xquik-x-data",
+      "source": "./xquik-x-data",
+      "description": "Plan Xquik API and remote MCP workflows for X data extraction, monitoring, search, and webhooks.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["xquik", "x", "api", "mcp", "monitoring", "webhooks"],
+      "category": "integrations"
     }
   ]
 }
