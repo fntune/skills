@@ -5,7 +5,7 @@ truncate_path() {
     local max_len=50
     local len=${#path}
 
-    if [ $len -le $max_len ]; then
+    if [ "$len" -le "$max_len" ]; then
         echo "$path"
         return
     fi
@@ -24,9 +24,9 @@ model="${agent:-$(echo "$input" | jq -r '.model.display_name')}"
 
 # Last-turn model from conversation JSONL (show as primary when different from session model)
 session_model_id=$(echo "$input" | jq -r '.model.id')
-latest_jsonl=$(ls -t ~/.claude/projects/*/*.jsonl 2>/dev/null | head -1)
-if [ -n "$latest_jsonl" ]; then
-    last_model_id=$(tail -30 "$latest_jsonl" 2>/dev/null | grep -o '"model":"claude-[^"]*"' | tail -1 | sed 's/"model":"//;s/"//')
+transcript_path=$(echo "$input" | jq -r '.transcript_path // empty')
+if [ -f "$transcript_path" ]; then
+    last_model_id=$(tail -30 "$transcript_path" 2>/dev/null | grep -o '"model":"claude-[^"]*"' | tail -1 | sed 's/"model":"//;s/"//')
     if [ -n "$last_model_id" ] && [ "$last_model_id" != "$session_model_id" ]; then
         last_short=$(echo "$last_model_id" | sed 's/claude-//;s/-.*//')
         default_short=$(echo "$session_model_id" | sed 's/claude-//;s/-.*//')
@@ -42,7 +42,7 @@ if [ "$usage" != "null" ]; then
     size=$(echo "$input" | jq '.context_window.context_window_size')
 
     format_k() {
-        val=$1
+        local val="$1"
         if [ "$val" = "0" ]; then
             echo "0"
         else
@@ -50,8 +50,8 @@ if [ "$usage" != "null" ]; then
         fi
     }
 
-    total_k=$(format_k $total)
-    size_k=$(format_k $size)
+    total_k=$(format_k "$total")
+    size_k=$(format_k "$size")
     pct=$(awk "BEGIN {printf \"%.1f\", ($total*100)/$size}")
 
     context_info=" | ${total_k}k/${size_k}k (${pct}%)"
@@ -63,7 +63,7 @@ full_path="${cwd/#$HOME/~}"
 display_path=$(truncate_path "$full_path")
 if [ "$cwd" != "$project_dir" ]; then
     proj_path="${project_dir/#$HOME/~}"
-    display_path="$(truncate_path "$proj_path") → ${cwd#$project_dir/}"
+    display_path="$(truncate_path "$proj_path") → ${cwd#"$project_dir"/}"
 fi
 
 # Git info: branch + status summary (mirrors Starship git_branch + git_status)

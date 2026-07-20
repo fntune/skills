@@ -1,0 +1,8 @@
+{
+  "name": "xquik-x-data",
+  "version": "1.0.0",
+  "description": "Plan Xquik API and remote MCP workflows for X data extraction, monitoring, search, and webhooks.",
+  "author": {
+    "name": "Xquik"
+  }
+}
